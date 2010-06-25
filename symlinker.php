@@ -45,11 +45,10 @@ $srcdirs = array(
 	SRCDIR.'/administrator/language/en-GB',
 	SRCDIR.'/administrator/language/tr-TR',
 	SRCDIR.'/administrator/modules',
-	SRCDIR.'/components',
 	SRCDIR.'/media',
 	SRCDIR.'/language/en-GB',
 	SRCDIR.'/language/tr-TR',
-	SRCDIR.'/modules',
+	SRCDIR.'/libraries',
 	SRCDIR.'/plugins/authentication',
 	SRCDIR.'/plugins/content',
 	SRCDIR.'/plugins/editors',
@@ -59,12 +58,13 @@ $srcdirs = array(
 	SRCDIR.'/plugins/system',
 	SRCDIR.'/plugins/user',
 	SRCDIR.'/plugins/xmlrpc',
+	SRCDIR.'/site/components',
+	SRCDIR.'/site/modules'
 );
-
 
 // Make symlinks
 $restricted = array('.git', '.svn', '.cvs', '.settings', '.buildpath', '.gitignore', '.project');
-foreach ($srcdirs as $srcdir) {
+foreach ($srcdirs as $srcdir) { 
 	if (file_exists($srcdir)) {
 		$it = new DirectoryIterator($srcdir);
 		foreach ($it as $src) {
@@ -74,6 +74,7 @@ foreach ($srcdirs as $srcdir) {
 			}
 			$full = realpath($src->getPathName());
 			$tgt = str_replace('/', DS, $target.str_replace(SRCDIR, '', $srcdir).'/'.$filename);
+			$tgt = str_replace('site'.DS, '', $tgt);
 			$opts = '';
 			if ($src->isDir()) {
 				$opts = '/D';
